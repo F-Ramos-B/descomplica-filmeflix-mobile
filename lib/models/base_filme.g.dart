@@ -6,14 +6,23 @@ part of 'base_filme.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BaseFilme _$BaseFilmeFromJson(Map<String, dynamic> json) => BaseFilme(
-      id: json['id'] as int,
-      titulo: json['titulo'] as String,
-      descricao: json['descricao'] as String,
-      linkImagem: json['linkImagem'] as String,
-      linkFilme: json['linkFilme'] as String,
-      numeroVisualizacoes: json['numeroVisualizacoes'] as int,
-      classificacaoIndicativa: json['classificacaoIndicativa'] as int,
+BaseFilme _$BaseFilmeFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'BaseFilme',
+      json,
+      ($checkedConvert) {
+        final val = BaseFilme(
+          id: $checkedConvert('id', (v) => v as int),
+          titulo: $checkedConvert('titulo', (v) => v as String),
+          descricao: $checkedConvert('descricao', (v) => v as String),
+          linkImagem: $checkedConvert('linkImagem', (v) => v as String),
+          linkFilme: $checkedConvert('linkFilme', (v) => v as String),
+          numeroVisualizacoes:
+              $checkedConvert('numeroVisualizacoes', (v) => v as int),
+          classificacaoIndicativa:
+              $checkedConvert('classificacaoIndicativa', (v) => v as int),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$BaseFilmeToJson(BaseFilme instance) => <String, dynamic>{

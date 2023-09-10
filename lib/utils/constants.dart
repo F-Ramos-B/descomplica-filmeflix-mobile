@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Constants {
   static const productBaseUrl =
       'https://shop-cod3r-c70a4-default-rtdb.firebaseio.com/products';
@@ -8,4 +10,9 @@ class Constants {
   static const filmeflixBaseUrl = filmeflixUrl + filmeflixBasePath;
   static const token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaWxtZWZsaXgiLCJzdWIiOiJwcm9mMUBlbWFpbC5jb20iLCJleHAiOjE3MDIxNTE5MDd9.2Uj613DZw6lVkuNAtiGxX4D9Rt_XC4duu6I9kC2_Jus';
+
+  static final Map<String, String> defaultHeaders = Map.from({
+    HttpHeaders.authorizationHeader: Constants.token,
+    HttpHeaders.acceptHeader: 'application/json; charset=UTF-8',
+  });
 }

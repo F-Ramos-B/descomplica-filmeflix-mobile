@@ -8,17 +8,27 @@ part of 'resultado_pesquisa_filme.dart';
 
 ResultadoPesquisaFilme _$ResultadoPesquisaFilmeFromJson(
         Map<String, dynamic> json) =>
-    ResultadoPesquisaFilme(
-      id: json['id'] as int,
-      titulo: json['titulo'] as String,
-      descricao: json['descricao'] as String,
-      linkImagem: json['linkImagem'] as String,
-      linkFilme: json['linkFilme'] as String,
-      numeroVisualizacoes: json['numeroVisualizacoes'] as int,
-      classificacaoIndicativa: json['classificacaoIndicativa'] as int,
-      mediaAvaliacoes: (json['mediaAvaliacoes'] as num).toDouble(),
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
+    $checkedCreate(
+      'ResultadoPesquisaFilme',
+      json,
+      ($checkedConvert) {
+        final val = ResultadoPesquisaFilme(
+          id: $checkedConvert('id', (v) => v as int),
+          titulo: $checkedConvert('titulo', (v) => v as String),
+          descricao: $checkedConvert('descricao', (v) => v as String),
+          linkImagem: $checkedConvert('linkImagem', (v) => v as String),
+          linkFilme: $checkedConvert('linkFilme', (v) => v as String),
+          numeroVisualizacoes:
+              $checkedConvert('numeroVisualizacoes', (v) => v as int),
+          classificacaoIndicativa:
+              $checkedConvert('classificacaoIndicativa', (v) => v as int),
+          mediaAvaliacoes:
+              $checkedConvert('mediaAvaliacoes', (v) => (v as num).toDouble()),
+          createdAt: $checkedConvert('createdAt', (v) => v as String),
+          updatedAt: $checkedConvert('updatedAt', (v) => v as String),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$ResultadoPesquisaFilmeToJson(

@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'filme.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class Filme extends BaseFilme {
   final List<EntidadeDominio> generos;
   final Plataforma plataforma;

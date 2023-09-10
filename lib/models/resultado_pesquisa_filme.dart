@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'resultado_pesquisa_filme.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class ResultadoPesquisaFilme extends BaseFilme with ChangeNotifier {
   final double mediaAvaliacoes;
   final String createdAt;
@@ -26,5 +26,6 @@ class ResultadoPesquisaFilme extends BaseFilme with ChangeNotifier {
   factory ResultadoPesquisaFilme.fromJson(Map<String, dynamic> json) =>
       _$ResultadoPesquisaFilmeFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ResultadoPesquisaFilmeToJson(this);
 }

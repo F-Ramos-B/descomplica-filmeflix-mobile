@@ -3,11 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'avaliacao.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class Avaliacao {
   final int id;
-  final int idFilme;
-  final int idPlaylist;
+  int? idFilme;
+  int? idPlaylist;
   final int nota;
   final String critica;
   final Usuario usuario;
@@ -16,8 +16,8 @@ class Avaliacao {
 
   Avaliacao({
     required this.id,
-    required this.idFilme,
-    required this.idPlaylist,
+    this.idFilme,
+    this.idPlaylist,
     required this.nota,
     required this.critica,
     required this.usuario,

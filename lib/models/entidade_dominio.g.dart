@@ -7,9 +7,16 @@ part of 'entidade_dominio.dart';
 // **************************************************************************
 
 EntidadeDominio _$EntidadeDominioFromJson(Map<String, dynamic> json) =>
-    EntidadeDominio(
-      id: json['id'] as int,
-      nome: json['nome'] as String,
+    $checkedCreate(
+      'EntidadeDominio',
+      json,
+      ($checkedConvert) {
+        final val = EntidadeDominio(
+          id: $checkedConvert('id', (v) => v as int),
+          nome: $checkedConvert('nome', (v) => v as String),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$EntidadeDominioToJson(EntidadeDominio instance) =>

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'filtro_pesquisa_filme.g.dart';
 
 //dart run build_runner build
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class FiltroPesquisaFilme {
   final String titulo;
   final String descricao;

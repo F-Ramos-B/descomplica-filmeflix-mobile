@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'base_filme.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class BaseFilme {
   final int id;
   final String titulo;

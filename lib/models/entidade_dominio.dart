@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'entidade_dominio.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class EntidadeDominio {
   final int id;
   final String nome;

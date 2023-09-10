@@ -7,13 +7,21 @@ part of 'filtro_pesquisa_filme.dart';
 // **************************************************************************
 
 FiltroPesquisaFilme _$FiltroPesquisaFilmeFromJson(Map<String, dynamic> json) =>
-    FiltroPesquisaFilme(
-      json['titulo'] as String,
-      json['descricao'] as String,
-      json['classificacaoIndicativaMin'] as int,
-      json['classificacaoIndicativaMax'] as int,
-      (json['generos'] as List<dynamic>).map((e) => e as int).toSet(),
-      json['plataforma'] as int,
+    $checkedCreate(
+      'FiltroPesquisaFilme',
+      json,
+      ($checkedConvert) {
+        final val = FiltroPesquisaFilme(
+          $checkedConvert('titulo', (v) => v as String),
+          $checkedConvert('descricao', (v) => v as String),
+          $checkedConvert('classificacaoIndicativaMin', (v) => v as int),
+          $checkedConvert('classificacaoIndicativaMax', (v) => v as int),
+          $checkedConvert('generos',
+              (v) => (v as List<dynamic>).map((e) => e as int).toSet()),
+          $checkedConvert('plataforma', (v) => v as int),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$FiltroPesquisaFilmeToJson(

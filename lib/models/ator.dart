@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'ator.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class Ator extends EntidadeDominio {
   final String sobrenome;
   final String biografia;

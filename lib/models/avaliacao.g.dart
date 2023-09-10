@@ -6,15 +6,23 @@ part of 'avaliacao.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Avaliacao _$AvaliacaoFromJson(Map<String, dynamic> json) => Avaliacao(
-      id: json['id'] as int,
-      idFilme: json['idFilme'] as int,
-      idPlaylist: json['idPlaylist'] as int,
-      nota: json['nota'] as int,
-      critica: json['critica'] as String,
-      usuario: Usuario.fromJson(json['usuario'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
+Avaliacao _$AvaliacaoFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'Avaliacao',
+      json,
+      ($checkedConvert) {
+        final val = Avaliacao(
+          id: $checkedConvert('id', (v) => v as int),
+          idFilme: $checkedConvert('idFilme', (v) => v as int?),
+          idPlaylist: $checkedConvert('idPlaylist', (v) => v as int?),
+          nota: $checkedConvert('nota', (v) => v as int),
+          critica: $checkedConvert('critica', (v) => v as String),
+          usuario: $checkedConvert(
+              'usuario', (v) => Usuario.fromJson(v as Map<String, dynamic>)),
+          createdAt: $checkedConvert('createdAt', (v) => v as String),
+          updatedAt: $checkedConvert('updatedAt', (v) => v as String),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$AvaliacaoToJson(Avaliacao instance) => <String, dynamic>{

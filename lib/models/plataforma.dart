@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'plataforma.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, checked: true)
 class Plataforma extends EntidadeDominio {
   final String linkPrefixo;
 
