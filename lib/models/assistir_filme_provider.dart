@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shop/models/assistir_filme.dart';
 import 'package:shop/utils/constants.dart';
@@ -22,7 +22,9 @@ class AssistirFilmeProvider with ChangeNotifier {
     var responseBody = response.body;
 
     print('Assistir Filme carregado:');
-    print(responseBody);
+    inspect(responseBody);
+    log(responseBody);
+    debugPrint(responseBody);
 
     _filmeCarregado = jsonDecode(responseBody);
 

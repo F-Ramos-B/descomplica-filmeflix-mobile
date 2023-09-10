@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/models/assistir_filme.dart';
 import 'package:shop/models/assistir_filme_provider.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/order_list.dart';
