@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shop/models/filme.dart';
+import 'package:shop/models/base_filme.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'resultado_pesquisa_filme.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ResultadoPesquisaFilme extends Filme with ChangeNotifier {
+class ResultadoPesquisaFilme extends BaseFilme with ChangeNotifier {
   final double mediaAvaliacoes;
   final String createdAt;
   final String updatedAt;

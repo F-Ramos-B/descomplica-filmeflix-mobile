@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer.dart';
 import 'package:shop/components/badge.dart' as badges;
 import 'package:shop/components/filme_grid.dart';
-import 'package:shop/components/product_grid.dart';
 import 'package:shop/models/cart.dart';
-import 'package:shop/models/product_list.dart';
 import 'package:shop/models/resultado_pesquisa_filme_list.dart';
 import 'package:shop/utils/app_routes.dart';
 
@@ -24,7 +22,7 @@ class FilmesOverviewPage extends StatefulWidget {
 class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
   bool _isLoading = true;
 
-  Future<void> _refreshFilmes(BuildContext context) {
+  Future<void> _carregarFilmes(BuildContext context) {
     setState(() {
       _isLoading = true;
     });
@@ -42,7 +40,7 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
   @override
   void initState() {
     super.initState();
-    _refreshFilmes(context);
+    _carregarFilmes(context);
   }
 
   @override
@@ -84,7 +82,7 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
-              onRefresh: () => _refreshFilmes(context),
+              onRefresh: () => _carregarFilmes(context),
               child: const FilmeGrid(),
             ),
       drawer: const AppDrawer(),

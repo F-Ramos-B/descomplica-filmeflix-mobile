@@ -28,7 +28,7 @@ class FilmeGridItem extends StatelessWidget {
           onTap: () {
             Navigator.of(context).pushNamed(
               AppRoutes.assistirFilme,
-              arguments: filme,
+              arguments: filme.id,
             );
           },
         ),
