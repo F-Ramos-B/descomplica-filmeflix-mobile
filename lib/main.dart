@@ -54,7 +54,6 @@ class MyApp extends StatelessWidget {
         routes: {
           AppRoutes.home: (ctx) => const ProductsOverviewPage(),
           AppRoutes.dashboard: (ctx) => const FilmesOverviewPage(),
-          AppRoutes.assistirFilme: (ctx) => const AssistirFilmePage(),
           AppRoutes.productDetail: (ctx) => const ProductDetailPage(),
           AppRoutes.cart: (ctx) => const CartPage(),
           AppRoutes.orders: (ctx) => const OrdersPage(),

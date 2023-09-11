@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/resultado_pesquisa_filme.dart';
-import 'package:shop/utils/app_routes.dart';
+import 'package:shop/pages/assistir_filme_page.dart';
 
 class FilmeGridItem extends StatelessWidget {
   const FilmeGridItem({Key? key}) : super(key: key);
@@ -26,10 +28,9 @@ class FilmeGridItem extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           onTap: () {
-            Navigator.of(context).pushNamed(
-              AppRoutes.assistirFilme,
-              arguments: filme.id,
-            );
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => AssistirFilmePage(filme),
+            ));
           },
         ),
       ),
