@@ -5,7 +5,6 @@ import 'package:shop/models/cart.dart';
 import 'package:shop/models/order_list.dart';
 import 'package:shop/models/product_list.dart';
 import 'package:shop/models/resultado_pesquisa_filme_list.dart';
-import 'package:shop/pages/assistir_filme_page.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/pages/filmes_overview_page.dart';
 import 'package:shop/pages/orders_page.dart';
