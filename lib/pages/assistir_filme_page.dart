@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/assistir_filme.dart';
 import 'package:shop/models/assistir_filme_provider.dart';
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
-import 'package:shop/models/avaliacao.dart';
 import 'package:shop/models/resultado_pesquisa_filme.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -51,6 +51,15 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
     _seekToController = TextEditingController();
     _videoMetaData = const YoutubeMetaData();
     _playerState = PlayerState.unknown;
+
+    Provider.of<AssistirFilmeProvider>(
+      context,
+      listen: false,
+    ).carregarFilme(widget.filme.id).then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   void listener() {
@@ -79,30 +88,19 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      Provider.of<AssistirFilmeProvider>(
-        context,
-        listen: false,
-      ).carregarFilme(widget.filme.id).then((value) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-
     return _isLoading
         ? const Center(child: CircularProgressIndicator())
         : Consumer<AssistirFilmeProvider>(
             builder: (context, filmeProvider, child) {
-              int mediaAvaliacoes =
-                  filmeProvider.filmeCarregado.mediaAvaliacoes.round();
+              AssistirFilme filmeCarregado = filmeProvider.filmeCarregado;
+              int mediaAvaliacoes = filmeCarregado.mediaAvaliacoes.round();
 
               bool usuarioPossuiComentario =
-                  filmeProvider.filmeCarregado.avaliacaoUsuarioLogado != null;
+                  filmeCarregado.avaliacaoUsuarioLogado != null;
 
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(filmeProvider.filmeCarregado.titulo),
+                  title: Text(filmeCarregado.titulo),
                 ),
                 body: SingleChildScrollView(
                   child: Column(
@@ -135,66 +133,70 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
                               physics: const ClampingScrollPhysics(),
                               children: [
                                 criarDescricaoFilme(
-                                  filmeProvider,
+                                  filmeCarregado,
                                   mediaAvaliacoes,
                                 ),
                                 criarListagemAvaliacoes(
-                                  filmeProvider.filmeCarregado.avaliacoes,
+                                  filmeCarregado.avaliacoes,
                                 ),
                                 usuarioPossuiComentario
-                                    ? criarListagemAvaliacoes([
-                                        filmeProvider.filmeCarregado
-                                            .avaliacaoUsuarioLogado
-                                      ])
-                                    : Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  const Text('Nota:'),
-                                                  Slider(
-                                                      value: _notaInicial,
-                                                      min: 1,
-                                                      max: 5,
-                                                      divisions: 4,
-                                                      label: _notaInicial
-                                                          .round()
-                                                          .toString(),
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          _notaInicial = value;
-                                                        });
-                                                      }),
-                                                ],
-                                              ),
-                                              ElevatedButton.icon(
-                                                onPressed: () {
-                                                  // Respond to button press
-                                                },
-                                                icon: const Icon(
-                                                  Icons.add,
-                                                  size: 18,
+                                    ? criarListagemAvaliacoes(
+                                        [filmeCarregado.avaliacaoUsuarioLogado])
+                                    : SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    const Text('Nota:'),
+                                                    Slider(
+                                                        value: _notaInicial,
+                                                        min: 1,
+                                                        max: 5,
+                                                        divisions: 4,
+                                                        label: _notaInicial
+                                                            .round()
+                                                            .toString(),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            _notaInicial =
+                                                                value;
+                                                          });
+                                                        }),
+                                                  ],
                                                 ),
-                                                label: const Text(
-                                                  "Postar avaliação",
+                                                ElevatedButton.icon(
+                                                  onPressed: () {
+                                                    // Respond to button press
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    size: 18,
+                                                  ),
+                                                  label: const Text(
+                                                    "Postar avaliação",
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20),
-                                          const TextField(
-                                            maxLines: 3,
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelText: 'Digite sua avaliação',
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            const SizedBox(height: 20),
+                                            const TextField(
+                                              maxLines: 5,
+                                              showCursor: true,
+                                              keyboardType:
+                                                  TextInputType.multiline,
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                labelText:
+                                                    'Digite sua avaliação',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                               ],
                             ),
@@ -210,21 +212,21 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
   }
 
   Column criarDescricaoFilme(
-      AssistirFilmeProvider filmeProvider, int mediaAvaliacoes) {
+      AssistirFilme filmeCarregado, int mediaAvaliacoes) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              filmeProvider.filmeCarregado.generosTexto,
+              filmeCarregado.generosTexto,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 14,
               ),
             ),
             Text(
-              '${filmeProvider.filmeCarregado.numeroVisualizacoes} visualizações',
+              '${filmeCarregado.numeroVisualizacoes} visualizações',
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 14,
@@ -234,7 +236,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
         ),
         const SizedBox(height: 10),
         Text(
-          filmeProvider.filmeCarregado.atoresTexto,
+          filmeCarregado.atoresTexto,
           style: const TextStyle(
             color: Colors.grey,
             fontSize: 14,
@@ -250,7 +252,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           width: double.infinity,
           child: Text(
-            filmeProvider.filmeCarregado.descricao,
+            filmeCarregado.descricao,
             textAlign: TextAlign.justify,
           ),
         )

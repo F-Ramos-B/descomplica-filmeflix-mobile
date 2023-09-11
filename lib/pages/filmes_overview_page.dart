@@ -47,7 +47,7 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('Home'),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
