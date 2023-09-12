@@ -35,6 +35,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
   void initState() {
     super.initState();
     _ids.add(widget.filme.linkFilme);
+
     _controller = YoutubePlayerController(
       initialVideoId: _ids.first,
       flags: const YoutubePlayerFlags(

@@ -4,6 +4,7 @@ import 'package:shop/components/app_drawer.dart';
 import 'package:shop/components/badge.dart' as badges;
 import 'package:shop/components/filme_grid.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/models/filtro_pesquisa_filme.dart';
 import 'package:shop/models/resultado_pesquisa_filme_list.dart';
 import 'package:shop/utils/app_routes.dart';
 
@@ -21,6 +22,7 @@ class FilmesOverviewPage extends StatefulWidget {
 
 class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
   bool _isLoading = true;
+  FiltroPesquisaFilme filtro = FiltroPesquisaFilme();
 
   Future<void> _carregarFilmes(BuildContext context) {
     setState(() {
@@ -49,33 +51,93 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
       appBar: AppBar(
         title: const Text('Home'),
         actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (_) => [
-              const PopupMenuItem(
-                value: FilterOptions.favorite,
-                child: Text('Somente Favoritos'),
-              ),
-              const PopupMenuItem(
-                value: FilterOptions.all,
-                child: Text('Todos'),
-              ),
-            ],
-            onSelected: (FilterOptions selectedValue) {
-              setState(() {});
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 900,
+                        width: double.infinity,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: const TextField(
+                                    showCursor: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Título',
+                                    )),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: 'Idade mínima',
+                                          )),
+                                    ),
+                                    SizedBox(width: 15),
+                                    Expanded(
+                                      child: TextField(
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: 'Idade máxima',
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    style: ButtonStyle(
+                                      minimumSize: MaterialStateProperty.all(
+                                          const Size(180, 40)),
+                                    ),
+                                    child: const Text('Pesquisar'),
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          const MaterialStatePropertyAll(
+                                        Colors.grey,
+                                      ),
+                                      minimumSize: MaterialStateProperty.all(
+                                          const Size(180, 40)),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Limpar'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
             },
-          ),
-          Consumer<Cart>(
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.cart);
-              },
-              icon: const Icon(Icons.shopping_cart),
-            ),
-            builder: (ctx, cart, child) => badges.Badge(
-              value: cart.itemsCount.toString(),
-              child: child!,
-            ),
+            icon: const Icon(Icons.search),
           ),
         ],
       ),
