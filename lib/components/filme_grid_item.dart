@@ -23,7 +23,7 @@ class FilmeGridItem extends StatelessWidget {
         child: GestureDetector(
           child: Image.network(
             filme.linkImagem,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

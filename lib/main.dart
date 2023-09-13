@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/assistir_filme_provider.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/models/genero_provider.dart';
 import 'package:shop/models/order_list.dart';
+import 'package:shop/models/plataforma_provider.dart';
 import 'package:shop/models/product_list.dart';
 import 'package:shop/models/resultado_pesquisa_filme_list.dart';
 import 'package:shop/pages/cart_page.dart';
@@ -33,6 +35,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => AssistirFilmeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PlataformaProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GeneroProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => Cart(),

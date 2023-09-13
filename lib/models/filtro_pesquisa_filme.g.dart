@@ -14,13 +14,13 @@ FiltroPesquisaFilme _$FiltroPesquisaFilmeFromJson(Map<String, dynamic> json) =>
         final val = FiltroPesquisaFilme(
           titulo: $checkedConvert('titulo', (v) => v as String?),
           descricao: $checkedConvert('descricao', (v) => v as String?),
-          classificacaoIndicativaMin:
-              $checkedConvert('classificacaoIndicativaMin', (v) => v as int?),
-          classificacaoIndicativaMax:
-              $checkedConvert('classificacaoIndicativaMax', (v) => v as int?),
+          classificacaoIndicativaMin: $checkedConvert(
+              'classificacaoIndicativaMin', (v) => v as String?),
+          classificacaoIndicativaMax: $checkedConvert(
+              'classificacaoIndicativaMax', (v) => v as String?),
           generos: $checkedConvert('generos',
-              (v) => (v as List<dynamic>?)?.map((e) => e as int).toSet()),
-          plataforma: $checkedConvert('plataforma', (v) => v as int?),
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toSet()),
+          plataforma: $checkedConvert('plataforma', (v) => v as String?),
         );
         return val;
       },

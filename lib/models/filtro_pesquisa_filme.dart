@@ -7,10 +7,10 @@ part 'filtro_pesquisa_filme.g.dart';
 class FiltroPesquisaFilme {
   String? titulo;
   String? descricao;
-  int? classificacaoIndicativaMin;
-  int? classificacaoIndicativaMax;
-  Set<int>? generos;
-  int? plataforma;
+  String? classificacaoIndicativaMin;
+  String? classificacaoIndicativaMax;
+  Set<String>? generos;
+  String? plataforma;
 
   FiltroPesquisaFilme({
     this.titulo,

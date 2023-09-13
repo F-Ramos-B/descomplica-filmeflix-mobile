@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:shop/models/filtro_pesquisa_filme.dart';
@@ -10,7 +11,7 @@ import 'package:shop/utils/constants.dart';
 class ResultadoPesquisaFilmeList with ChangeNotifier {
   final List<ResultadoPesquisaFilme> _items = [];
 
-  List<ResultadoPesquisaFilme> get items => [..._items];
+  List<ResultadoPesquisaFilme> get items => List.unmodifiable(_items);
 
   int get itemsCount {
     return _items.length;
@@ -29,9 +30,6 @@ class ResultadoPesquisaFilmeList with ChangeNotifier {
     );
 
     var responseBody = response.body;
-
-    print('Responsebody');
-    print(responseBody);
 
     List<dynamic> data = jsonDecode(responseBody);
     for (var filme in data) {

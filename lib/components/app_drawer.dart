@@ -43,15 +43,6 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('Pesquisar'),
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.products,
-                );
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.add_circle_rounded),
               title: const Text('Incluir'),
               onTap: () {
