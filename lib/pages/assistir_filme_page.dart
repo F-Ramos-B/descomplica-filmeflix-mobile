@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:shop/models/assistir_filme.dart';
 import 'package:shop/models/assistir_filme_provider.dart';
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
-import 'package:shop/models/resultado_pesquisa_filme.dart';
+import 'package:shop/models/base_filme.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class AssistirFilmePage extends StatefulWidget {
-  final ResultadoPesquisaFilme filme;
+  final BaseFilme filme;
 
   const AssistirFilmePage(this.filme, {Key? key}) : super(key: key);
 
@@ -101,7 +101,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(filmeCarregado.titulo),
+                  title: Text(widget.filme.titulo),
                 ),
                 body: SingleChildScrollView(
                   child: Column(

@@ -9,4 +9,5 @@ class AppRoutes {
 
   static const filmes = '/filmes';
   static const pesquisar = '/pesquisar';
+  static const playlists = '/playlists';
 }

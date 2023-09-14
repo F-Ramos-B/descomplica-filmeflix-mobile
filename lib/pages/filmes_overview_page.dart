@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer.dart';
@@ -7,14 +5,8 @@ import 'package:shop/components/filme_grid.dart';
 import 'package:shop/models/filtro_pesquisa_filme.dart';
 import 'package:shop/models/genero_provider.dart';
 import 'package:shop/models/plataforma_provider.dart';
-import 'package:shop/models/resultado_pesquisa_filme.dart';
 import 'package:shop/models/resultado_pesquisa_filme_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
-enum FilterOptions {
-  favorite,
-  all,
-}
 
 class FilmesOverviewPage extends StatefulWidget {
   const FilmesOverviewPage({Key? key}) : super(key: key);
@@ -127,7 +119,7 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
                                   keyboardType: TextInputType.multiline,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    labelText: 'Digite sua avaliação',
+                                    labelText: 'Descrição',
                                   ),
                                 ),
                               ),

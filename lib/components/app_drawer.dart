@@ -31,7 +31,7 @@ class AppDrawer extends StatelessWidget {
               title: const Text('Home'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.home,
+                  AppRoutes.dashboard,
                 );
               },
             ),
@@ -63,7 +63,7 @@ class AppDrawer extends StatelessWidget {
               title: const Text('Pesquisar'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.products,
+                  AppRoutes.playlists,
                 );
               },
             ),
