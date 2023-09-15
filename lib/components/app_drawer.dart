@@ -59,8 +59,8 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('Pesquisar'),
+              leading: const Icon(Icons.list_alt),
+              title: const Text('Listar'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
                   AppRoutes.playlists,

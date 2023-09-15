@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:shop/components/app_drawer.dart';
+import 'package:shop/components/listagem_avaliacoes.dart';
 import 'package:shop/components/playlist_filme_item.dart';
+import 'package:shop/components/ratings.dart';
 import 'package:shop/models/playlist.dart';
 
-class PlaylistPage extends StatelessWidget {
+class PlaylistPage extends StatefulWidget {
   final Playlist playlist;
 
   const PlaylistPage(this.playlist, {Key? key}) : super(key: key);
 
   @override
+  State<PlaylistPage> createState() => _PlaylistPageState();
+}
+
+class _PlaylistPageState extends State<PlaylistPage> {
+  double _notaInicial = 3;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(playlist.nome),
+          title: Text(widget.playlist.nome),
           actions: [
             IconButton(
               icon: const Icon(Icons.info_outline),
@@ -23,32 +37,112 @@ class PlaylistPage extends StatelessWidget {
                       return AlertDialog(
                         scrollable: true,
                         alignment: Alignment.center,
-                        title: Text(playlist.nome),
+                        title: Text(widget.playlist.nome),
                         content: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Criado por: ${playlist.criador.apelido}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
+                                  'Criado por: ${widget.playlist.criador.apelido}',
+                                  style: styleSubtitulo(),
                                 ),
                                 const Spacer(),
-                                ...criarEstrelas(
-                                  playlist.mediaAvaliacoes.round(),
+                                ...Ratings.criarEstrelas(
+                                  widget.playlist.mediaAvaliacoes.round(),
                                 )
                               ],
                             ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                'Criada em ${widget.playlist.createdAt}',
+                                style: styleSubtitulo(),
+                              ),
+                            ),
                             const Divider(),
                             Text(
-                              playlist.descricao,
+                              widget.playlist.descricao,
                               textAlign: TextAlign.justify,
                             ),
                           ],
                         ),
-                        actions: <Widget>[
+                        actions: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.comment),
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        scrollable: true,
+                        alignment: Alignment.center,
+                        title: const Text('Avaliações'),
+                        content: SizedBox(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          child: ListagemAvaliacoes.criarListagemAvaliacoes(
+                            widget.playlist.avaliacoes,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.person_add_alt_1),
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        scrollable: true,
+                        alignment: Alignment.center,
+                        title: Text(
+                            widget.playlist.avaliacaoUsuarioLogado != null
+                                ? 'Minha avaliação'
+                                : 'Postar avaliação'),
+                        content: SizedBox(
+                            height: double.maxFinite,
+                            width: double.maxFinite,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: ListagemAvaliacoes
+                                  .listagemAvaliacaoUsuarioDialog(
+                                      widget.playlist.avaliacaoUsuarioLogado,
+                                      _notaInicial,
+                                      (nota) => {
+                                            setState(() {
+                                              _notaInicial = nota;
+                                            })
+                                          }),
+                            )),
+                        actions: [
                           TextButton(
                             style: TextButton.styleFrom(
                               textStyle: Theme.of(context).textTheme.labelLarge,
@@ -67,19 +161,15 @@ class PlaylistPage extends StatelessWidget {
         ),
         drawer: const AppDrawer(),
         body: ListView.builder(
-          itemCount: playlist.filmes.length,
+          itemCount: widget.playlist.filmes.length,
           itemBuilder: (ctx, i) =>
-              PlaylistFilmeItem(playlistFilme: playlist.filmes[i]),
+              PlaylistFilmeItem(playlistFilme: widget.playlist.filmes[i]),
         ));
   }
 
-  List<Icon> criarEstrelas(int mediaAvaliacoes) {
-    return List<Icon>.generate(
-      5,
-      (int index) => Icon(
-        mediaAvaliacoes > index ? Icons.star : Icons.star_border,
-        size: 14,
-      ),
+  TextStyle styleSubtitulo() {
+    return const TextStyle(
+      fontSize: 14,
     );
   }
 }

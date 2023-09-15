@@ -52,6 +52,7 @@ class _PlaylistFilmeItemState extends State<PlaylistFilmeItem> {
                   _expanded
                       ? filme.descricao
                       : '${filme.descricao.substring(0, 201)}...',
+                  textAlign: TextAlign.justify,
                 ),
               ],
             ),

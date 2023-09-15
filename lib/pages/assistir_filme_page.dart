@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/listagem_avaliacoes.dart';
+import 'package:shop/components/ratings.dart';
 import 'package:shop/models/assistir_filme.dart';
 import 'package:shop/models/assistir_filme_provider.dart';
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
@@ -137,68 +139,17 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
                                   filmeCarregado,
                                   mediaAvaliacoes,
                                 ),
-                                criarListagemAvaliacoes(
+                                ListagemAvaliacoes.criarListagemAvaliacoes(
                                   filmeCarregado.avaliacoes,
                                 ),
-                                usuarioPossuiComentario
-                                    ? criarListagemAvaliacoes(
-                                        [filmeCarregado.avaliacaoUsuarioLogado])
-                                    : SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    const Text('Nota:'),
-                                                    Slider(
-                                                        value: _notaInicial,
-                                                        min: 1,
-                                                        max: 5,
-                                                        divisions: 4,
-                                                        label: _notaInicial
-                                                            .round()
-                                                            .toString(),
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            _notaInicial =
-                                                                value;
-                                                          });
-                                                        }),
-                                                  ],
-                                                ),
-                                                ElevatedButton.icon(
-                                                  onPressed: () {
-                                                    // Respond to button press
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.add,
-                                                    size: 18,
-                                                  ),
-                                                  label: const Text(
-                                                    "Postar avaliação",
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 20),
-                                            const TextField(
-                                              maxLines: 5,
-                                              showCursor: true,
-                                              keyboardType:
-                                                  TextInputType.multiline,
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText:
-                                                    'Digite sua avaliação',
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                ListagemAvaliacoes.listagemAvaliacaoUsuario(
+                                    filmeCarregado.avaliacaoUsuarioLogado,
+                                    _notaInicial,
+                                    (nota) => {
+                                          setState(() {
+                                            _notaInicial = nota;
+                                          })
+                                        })
                               ],
                             ),
                           ],
@@ -246,7 +197,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: criarEstrelas(mediaAvaliacoes),
+          children: Ratings.criarEstrelas(mediaAvaliacoes),
         ),
         const SizedBox(height: 10),
         Container(
@@ -293,7 +244,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
                         avaliacao.usuario.apelido,
                       ),
                       Row(
-                        children: criarEstrelas(avaliacao.nota),
+                        children: Ratings.criarEstrelas(avaliacao.nota),
                       )
                     ],
                   ),
@@ -547,15 +498,6 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
             ),
           ),
         ));
-  }
-
-  List<Icon> criarEstrelas(int mediaAvaliacoes) {
-    return List<Icon>.generate(
-      5,
-      (int index) => Icon(
-        mediaAvaliacoes > index ? Icons.star : Icons.star_border,
-      ),
-    );
   }
 
   Widget _text(String title, String value) {
