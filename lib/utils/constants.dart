@@ -9,7 +9,7 @@ class Constants {
   static const filmeflixBasePath = 'filmeflix';
   static const filmeflixBaseUrl = filmeflixUrl + filmeflixBasePath;
   static const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaWxtZWZsaXgiLCJzdWIiOiJwcm9mMUBlbWFpbC5jb20iLCJleHAiOjE3MDIxNTE5MDd9.2Uj613DZw6lVkuNAtiGxX4D9Rt_XC4duu6I9kC2_Jus';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaWxtZWZsaXgiLCJzdWIiOiJwYXVsYUBnbWFpbC5jb20iLCJleHAiOjE3MDI5MjU1MDB9.JLBN0UVVMiNYk3zaXwiTesyFba2KZD_DuI9H4io_lT4';
 
   static final Map<String, String> defaultHeaders = Map.from({
     HttpHeaders.authorizationHeader: Constants.token,
