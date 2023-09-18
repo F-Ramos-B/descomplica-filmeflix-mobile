@@ -7,6 +7,7 @@ abstract class Ratings {
       (int index) => Icon(
         mediaAvaliacoes > index ? Icons.star : Icons.star_border,
         size: size,
+        shadows: const [Shadow(color: Colors.black, offset: Offset(3, 3))],
       ),
     );
   }
