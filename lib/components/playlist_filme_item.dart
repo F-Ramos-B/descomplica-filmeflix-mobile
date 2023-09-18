@@ -36,7 +36,7 @@ class _PlaylistFilmeItemState extends State<PlaylistFilmeItem> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                Text(filme.titulo),
+                Text(filme.tituloAnoPublicacao),
               ],
             ),
             subtitle: Column(

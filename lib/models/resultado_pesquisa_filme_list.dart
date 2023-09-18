@@ -26,7 +26,7 @@ class ResultadoPesquisaFilmeList with ChangeNotifier {
         '${Constants.filmeflixBasePath}/filmes/pesquisar',
         filtro?.toJson(),
       ),
-      headers: Map.from({HttpHeaders.authorizationHeader: Constants.token}),
+      headers: Constants.defaultHeaders,
     );
 
     var responseBody = response.body;

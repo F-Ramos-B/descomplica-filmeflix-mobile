@@ -16,14 +16,16 @@ class FilmeGridItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           title: Text(
-            filme.titulo,
+            filme.tituloAnoPublicacao,
+            overflow: TextOverflow.fade,
+            softWrap: true,
             textAlign: TextAlign.center,
           ),
         ),
         child: GestureDetector(
           child: Image.network(
             filme.linkImagem,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

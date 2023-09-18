@@ -13,6 +13,9 @@ Filme _$FilmeFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Filme(
           id: $checkedConvert('id', (v) => v as int),
           titulo: $checkedConvert('titulo', (v) => v as String),
+          anoPublicacao: $checkedConvert('anoPublicacao', (v) => v as int),
+          tituloAnoPublicacao:
+              $checkedConvert('tituloAnoPublicacao', (v) => v as String),
           descricao: $checkedConvert('descricao', (v) => v as String),
           linkImagem: $checkedConvert('linkImagem', (v) => v as String),
           linkFilme: $checkedConvert('linkFilme', (v) => v as String),
@@ -38,6 +41,8 @@ Filme _$FilmeFromJson(Map<String, dynamic> json) => $checkedCreate(
 Map<String, dynamic> _$FilmeToJson(Filme instance) => <String, dynamic>{
       'id': instance.id,
       'titulo': instance.titulo,
+      'anoPublicacao': instance.anoPublicacao,
+      'tituloAnoPublicacao': instance.tituloAnoPublicacao,
       'descricao': instance.descricao,
       'linkImagem': instance.linkImagem,
       'linkFilme': instance.linkFilme,

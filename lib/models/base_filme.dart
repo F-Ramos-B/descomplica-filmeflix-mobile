@@ -6,6 +6,8 @@ part 'base_filme.g.dart';
 class BaseFilme {
   final int id;
   final String titulo;
+  final int anoPublicacao;
+  final String tituloAnoPublicacao;
   final String descricao;
   final String linkImagem;
   final String linkFilme;
@@ -15,6 +17,8 @@ class BaseFilme {
   BaseFilme({
     required this.id,
     required this.titulo,
+    required this.anoPublicacao,
+    required this.tituloAnoPublicacao,
     required this.descricao,
     required this.linkImagem,
     required this.linkFilme,

@@ -103,7 +103,7 @@ class _AssistirFilmePageState extends State<AssistirFilmePage> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(widget.filme.titulo),
+                  title: Text(widget.filme.tituloAnoPublicacao),
                 ),
                 body: SingleChildScrollView(
                   child: Column(

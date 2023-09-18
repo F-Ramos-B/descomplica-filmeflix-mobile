@@ -13,6 +13,8 @@ class ResultadoPesquisaFilme extends BaseFilme with ChangeNotifier {
   ResultadoPesquisaFilme({
     required super.id,
     required super.titulo,
+    required super.anoPublicacao,
+    required super.tituloAnoPublicacao,
     required super.descricao,
     required super.linkImagem,
     required super.linkFilme,
