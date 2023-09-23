@@ -14,5 +14,5 @@ class GeneroProvider extends BaseListProvider<EntidadeDominio> {
   String getLabel(EntidadeDominio element) => element.nome;
 
   @override
-  String getValue(EntidadeDominio element) => element.id.toString();
+  int getValue(EntidadeDominio element) => element.id;
 }

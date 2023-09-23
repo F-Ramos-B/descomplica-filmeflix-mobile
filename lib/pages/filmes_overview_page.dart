@@ -76,202 +76,237 @@ class _FilmesOverviewPageState extends State<FilmesOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final int quantidadeResultados =
+        Provider.of<ResultadoPesquisaFilmeList>(context).items.length;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text(
+          'Home - $quantidadeResultados filmes localizados',
+          style: const TextStyle(fontSize: 16),
+        ),
         actions: [
           IconButton(
             onPressed: () {
               showModalBottomSheet<void>(
+                isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: SizedBox(
-                        height: 420,
-                        width: double.infinity,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                child: TextField(
+                  return Wrap(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: TextField(
+                                      onChanged: (value) {
+                                        filtro.titulo = value;
+                                      },
+                                      showCursor: true,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Título',
+                                      )),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: TextField(
                                     onChanged: (value) {
-                                      filtro.titulo = value;
+                                      filtro.descricao = value;
                                     },
+                                    maxLines: 2,
                                     showCursor: true,
+                                    keyboardType: TextInputType.multiline,
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Título',
-                                    )),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                child: TextField(
-                                  onChanged: (value) {
-                                    filtro.descricao = value;
-                                  },
-                                  maxLines: 2,
-                                  showCursor: true,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Descrição',
+                                      labelText: 'Descrição',
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                          onChanged: (value) {
-                                            filtro.classificacaoIndicativaMin =
-                                                value;
-                                          },
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Idade mínima',
-                                          )),
-                                    ),
-                                    const SizedBox(width: 15),
-                                    Expanded(
-                                      child: TextField(
-                                          onChanged: (value) {
-                                            filtro.classificacaoIndicativaMax =
-                                                value;
-                                          },
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Idade máxima',
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              _isLoadingPlataforma
-                                  ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : Container(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Consumer<PlataformaProvider>(
-                                        builder: (
-                                          context,
-                                          plataformaProvider,
-                                          child,
-                                        ) {
-                                          return DropdownButtonFormField<
-                                              String>(
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: TextField(
+                                            onChanged: (value) {
+                                              filtro.anoPublicacaoMin =
+                                                  int.parse(value);
+                                            },
+                                            keyboardType: TextInputType.number,
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
-                                              labelText: 'Plataforma',
-                                            ),
-                                            value: filtro.plataforma,
-                                            items: plataformaProvider
-                                                .toDropdownMenu,
-                                            onChanged:
-                                                (String? novoSelecionado) {
-                                              setState(() {
-                                                filtro.plataforma =
-                                                    novoSelecionado;
-                                              });
-                                            },
-                                          );
-                                        },
+                                              labelText:
+                                                  'Ano publicação mínima',
+                                            )),
                                       ),
-                                    ),
-                              _isLoadingGeneros
-                                  ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : Container(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Consumer<GeneroProvider>(
-                                        builder: (
-                                          context,
-                                          generoProvider,
-                                          child,
-                                        ) {
-                                          return MultiSelectDialogField<String>(
-                                            items: generoProvider
-                                                .toMultiSelectMenu,
-                                            chipDisplay:
-                                                MultiSelectChipDisplay.none(),
-                                            title: const Text("Gêneros"),
-                                            cancelText: const Text('Cancelar'),
-                                            confirmText:
-                                                const Text('Confirmar'),
-                                            selectedItemsTextStyle:
-                                                textoCorCinza(),
-                                            itemsTextStyle: textoCorCinza(),
-                                            checkColor: Colors.white70,
-                                            selectedColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            unselectedColor: Colors.white70,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            buttonIcon: const Icon(
-                                              Icons.arrow_drop_down_sharp,
-                                            ),
-                                            buttonText: Text(
-                                              "Gêneros",
-                                              style: textoCorCinza(),
-                                            ),
-                                            onConfirm: (results) {
-                                              setState(() {
-                                                filtro.generos = results
-                                                    .map((e) => e.toString())
-                                                    .toSet();
-                                              });
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: TextField(
+                                            onChanged: (value) {
+                                              filtro.anoPublicacaoMax =
+                                                  int.parse(value);
                                             },
-                                          );
-                                        },
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText:
+                                                  'Ano publicação máxima',
+                                            )),
                                       ),
-                                    ),
-                              const Divider(),
-                              ElevatedButton(
-                                onPressed: () => _carregarFilmes(context),
-                                style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(double.infinity, 40),
+                                    ],
                                   ),
                                 ),
-                                child: const Text('Pesquisar'),
-                              ),
-                            ],
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: TextField(
+                                            onChanged: (value) {
+                                              filtro.classificacaoIndicativaMin =
+                                                  int.parse(value);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Idade mínima',
+                                            )),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: TextField(
+                                            onChanged: (value) {
+                                              filtro.classificacaoIndicativaMax =
+                                                  int.parse(value);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Idade máxima',
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                _isLoadingPlataforma
+                                    ? const Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Container(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Consumer<PlataformaProvider>(
+                                          builder: (
+                                            context,
+                                            plataformaProvider,
+                                            child,
+                                          ) {
+                                            return DropdownButtonFormField<int>(
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                labelText: 'Plataforma',
+                                              ),
+                                              value: filtro.plataforma,
+                                              items: plataformaProvider
+                                                  .toDropdownMenu,
+                                              onChanged:
+                                                  (int? novoSelecionado) {
+                                                setState(() {
+                                                  filtro.plataforma =
+                                                      novoSelecionado;
+                                                });
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                _isLoadingGeneros
+                                    ? const Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Container(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Consumer<GeneroProvider>(
+                                          builder: (
+                                            context,
+                                            generoProvider,
+                                            child,
+                                          ) {
+                                            return MultiSelectDialogField<int>(
+                                              items: generoProvider
+                                                  .toMultiSelectMenu,
+                                              chipDisplay:
+                                                  MultiSelectChipDisplay.none(),
+                                              title: const Text("Gêneros"),
+                                              cancelText:
+                                                  const Text('Cancelar'),
+                                              confirmText:
+                                                  const Text('Confirmar'),
+                                              selectedItemsTextStyle:
+                                                  textoCorCinza(),
+                                              itemsTextStyle: textoCorCinza(),
+                                              checkColor: Colors.white70,
+                                              selectedColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              unselectedColor: Colors.white70,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .hintColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              buttonIcon: const Icon(
+                                                Icons.arrow_drop_down_sharp,
+                                              ),
+                                              buttonText: Text(
+                                                "Gêneros",
+                                                style: textoCorCinza(),
+                                              ),
+                                              onConfirm: (results) {
+                                                setState(() {
+                                                  filtro.generos =
+                                                      results.toSet();
+                                                });
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                const Divider(),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    _carregarFilmes(context);
+                                  },
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(
+                                      const Size(double.infinity, 40),
+                                    ),
+                                  ),
+                                  child: const Text('Pesquisar'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      )
+                    ],
                   );
                 },
-              ).whenComplete(() => setState(() {
-                    filtro = FiltroPesquisaFilme();
-
-                    final bool isResultadoVazio =
-                        Provider.of<ResultadoPesquisaFilmeList>(
-                      context,
-                      listen: false,
-                    ).items.isEmpty;
-
-                    if (isResultadoVazio) {
-                      _carregarFilmes(context);
-                    }
-                  }));
+              ).whenComplete(
+                () => setState(() => filtro = FiltroPesquisaFilme()),
+              );
             },
             icon: const Icon(Icons.search),
           ),

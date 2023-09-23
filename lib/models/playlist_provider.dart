@@ -13,5 +13,5 @@ class PlaylistProvider extends BaseListProvider<Playlist> {
   String getLabel(Playlist element) => element.nome;
 
   @override
-  String getValue(Playlist element) => element.id.toString();
+  int getValue(Playlist element) => element.id;
 }

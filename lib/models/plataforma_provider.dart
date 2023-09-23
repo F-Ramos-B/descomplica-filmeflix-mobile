@@ -13,5 +13,5 @@ class PlataformaProvider extends BaseListProvider<Plataforma> {
   String getLabel(Plataforma element) => element.nome;
 
   @override
-  String getValue(Plataforma element) => element.id.toString();
+  int getValue(Plataforma element) => element.id;
 }
