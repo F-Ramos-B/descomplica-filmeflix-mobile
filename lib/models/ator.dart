@@ -7,7 +7,7 @@ part 'ator.g.dart';
 @JsonSerializable(explicitToJson: true, checked: true)
 class Ator extends EntidadeDominio {
   final String sobrenome;
-  final String biografia;
+  String? biografia;
   final String dataNascimento;
   final String textoSelect;
   final int idade;
@@ -17,7 +17,7 @@ class Ator extends EntidadeDominio {
     required super.id,
     required super.nome,
     required this.sobrenome,
-    required this.biografia,
+    this.biografia,
     required this.dataNascimento,
     required this.idade,
     required this.textoSelect,
